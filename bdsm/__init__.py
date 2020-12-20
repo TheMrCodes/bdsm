@@ -7,7 +7,6 @@ This package aims to provide useful tools for students and
 lecturers alike to help to learn and understand Data Science in
 python.
 """
-import os
 
 
 # PEP0440 compatible formatted version, see:
@@ -27,3 +26,30 @@ import os
 # 'X.Y.dev0' is the canonical version of 'X.Y.dev'
 #
 __version__ = '0.01.dev'
+
+
+# Let users know if they're missing any of our hard dependencies
+hard_dependencies = ('os', 'pandas', 'numpy')
+missing_dependencies = []
+
+for dependency in hard_dependencies:
+    try:
+        __import__(dependency)
+    except ImportError as e:
+        missing_dependencies.append(f"{dependency}: {e}")
+
+if missing_dependencies:
+    raise ImportError(
+        "Unable to import required dependencies:\n" + "\n".join(missing_dependencies)
+    )
+    
+del hard_dependencies, dependency, missing_dependencies
+
+
+import os
+
+from bdsm.datasets import (
+    Abalones,
+    Titanic,
+    Iris
+)
