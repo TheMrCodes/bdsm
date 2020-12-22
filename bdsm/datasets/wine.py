@@ -2,13 +2,13 @@ import numpy as np
 import pandas as pd
 from .dataframe import BdsmDataFrame
 
-class Abalones(BdsmDataFrame):
+class Wine(BdsmDataFrame):
     """
-        Abalones dataset as pandas dataframe
+        Wine dataset as pandas dataframe
     """
     def __init__(self):
-        data_file = self._load_file('abalones.csv')
-        df = pd.read_csv(data_file)
+        data_file = self._load_file('wine.csv')
+        df = pd.read_csv(data_file, sep = ';')
         
         super().__init__(df)
     
@@ -16,6 +16,6 @@ class Abalones(BdsmDataFrame):
         df = self
         
         # column types
-        df['Sex'] = df['Sex'].astype('category')
+        df['color'] = df['color'].astype('category')
         
         return df

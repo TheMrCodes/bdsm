@@ -1,18 +1,21 @@
+import numpy as np
 import pandas as pd
 from .dataframe import BdsmDataFrame
 
 class Iris(BdsmDataFrame):
     """
-        Abalones dataset as pandas dataframe
+        Iris dataset as pandas dataframe
     """
-    def __init__(self) -> pd.core.api.DataFrame:
+    def __init__(self):
         data_file = self._load_file('iris.csv')
         df = pd.read_csv(data_file)
         
-        super(Iris, self).__init__(df)
+        super().__init__(df)
     
-    def clean(self) -> pd.core.api.DataFrame:
+    def clean(self):
         df = self
+        
+        # column types
         df['Class'] = df['Class'].astype('category')
         
         return df

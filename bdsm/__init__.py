@@ -51,5 +51,10 @@ import os
 from bdsm.datasets import (
     Abalones,
     Titanic,
-    Iris
+    Iris,
+    Penguins,
+    Mall,
+    Bodyfat,
+    Wine,
+    Students
 )

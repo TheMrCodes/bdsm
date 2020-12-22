@@ -3,11 +3,27 @@ Base IO code for all datasets
 """
 
 import os
+import numpy as np
 import pandas as pd
 
+class BdsmSeries(pd.Series):
+    @property
+    def _constructor(self):
+        return BdsmSeries
+    
+    @property
+    def _constructor_expanddim(self):
+        return BdsmDataFrame
+    
+
 class BdsmDataFrame(pd.DataFrame):    
-    def __init__(self, df) -> pd.core.api.DataFrame:        
-        super(BdsmDataFrame, self).__init__(df)
+    @property
+    def _constructor(self):
+        return BdsmDataFrame
+    
+    @property
+    def _constructor_sliced(self):
+        return BdsmSeries
     
     def _load_file(self, file) -> os.path:
         module_path = os.path.dirname(__file__)
@@ -15,7 +31,10 @@ class BdsmDataFrame(pd.DataFrame):
         
         return os.path.join(data_path, file)
     
-    def to_numeric(self) -> pd.core.api.DataFrame:
+    def clean(self):
+        return self
+    
+    def to_numeric(self):
         df = self.clean()
         
         cat = df.select_dtypes(['category']).columns
