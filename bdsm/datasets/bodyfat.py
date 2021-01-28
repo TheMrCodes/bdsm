@@ -13,6 +13,14 @@ class Bodyfat(BdsmDataFrame):
         super().__init__(df)
     
     def clean(self, unit = 'imperial'):
+        """Parameters:
+              unit: string
+                 imperial for Height in inches and Weight in lbs
+                 metric for Height in cm and Weight in kg
+
+           Returns: 
+              A clean data set for regression with column Density removed"""
+              
         df = self
         
         # check unit argument for valid options
@@ -23,7 +31,7 @@ class Bodyfat(BdsmDataFrame):
         
         # convert Weight and Height to metric
         if unit == 'metric':
-            df['Weight'] = df['Weight'] * 0.45359237
-            df['Height'] = df['Height'] / 0.39370
+            df['Weight'] = round(df['Weight'] * 0.45359237, 2)
+            df['Height'] = round(df['Height'] / 0.39370, 2)
         
         return df
