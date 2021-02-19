@@ -49,12 +49,16 @@ del hard_dependencies, dependency, missing_dependencies
 import os
 
 from bdsm.datasets import (
-    Abalones,
-    Titanic,
-    Iris,
-    Penguins,
-    Mall,
-    Bodyfat,
-    Wine,
-    Students
+    abalones,
+    bodyfat,
+    iris,
+    mall,
+    penguins,
+    students,
+    titanic,
+    wine
+)
+
+from bdsm.tools import (
+    vif
 )

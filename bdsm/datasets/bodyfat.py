@@ -1,37 +1,82 @@
 import numpy as np
 import pandas as pd
-from .dataframe import BdsmDataFrame
+from ._helper import _load_file
 
-class Bodyfat(BdsmDataFrame):
-    """
-        Bodyfat dataset as pandas dataframe
-    """
-    def __init__(self):
-        data_file = self._load_file('bodyfat.csv')
-        df = pd.read_csv(data_file)
-        
-        super().__init__(df)
+class BodyfatSeries(pd.Series):
+    @property
+    def _constructor(self):
+        return BodyfatSeries
     
-    def clean(self, unit = 'imperial'):
-        """Parameters:
-              unit: string
-                 imperial for Height in inches and Weight in lbs
-                 metric for Height in cm and Weight in kg
+    @property
+    def _constructor_expanddim(self):
+        return BodyfatDataFrame
+    
 
-           Returns: 
-              A clean data set for regression with column Density removed"""
-              
+class BodyfatDataFrame(pd.DataFrame):    
+    @property
+    def _constructor(self):
+        return BodyfatDataFrame
+    
+    @property
+    def _constructor_sliced(self):
+        return BodyfatSeries
+    
+    def convert(self, unit = 'imperial'):
+        weights = ['Weight']
+        lengths = ['Height', 'Neck', 'Chest', 'Abdomen', 'Hip', 'Thigh', 'Knee', 'Ankle', 'Biceps', 'Forearm', 'Wrist']
+        
         df = self
         
-        # check unit argument for valid options
-        unit = unit if unit in ('imperial', 'metric') else 'imperial'
+        # convert Weight and Height to specified unit
+        if unit in ('imperial', 'metric') and df.attrs['unit'] != unit:
+            df.attrs['unit'] = unit
+            
+            if unit == 'metric':
+                df[weights] = df[weights].applymap(lambda x: round(x * 0.45359237, 2))
+                df[lengths] = df[lengths].applymap(lambda x: round(x / 0.39370, 2))
+            else:
+                df[weights] = df[weights].applymap(lambda x: round(x / 0.45359237, 2))
+                df[lengths] = df[lengths].applymap(lambda x: round(x * 0.39370, 2))
+        
+        return df
+    
+    def clean(self):
+        df = self
         
         # drop Density
         df = df.drop(['Density'], axis = 1)
         
-        # convert Weight and Height to metric
-        if unit == 'metric':
-            df['Weight'] = round(df['Weight'] * 0.45359237, 2)
-            df['Height'] = round(df['Height'] / 0.39370, 2)
+        # set clean state
+        df.attrs['cleaned'] = True
         
         return df
+    
+    def to_numeric(self):
+        # clean df if not cleaned
+        if not self.attrs['cleaned']:
+            df = self.clean()
+        else:
+            df = self
+        
+        cat = df.select_dtypes(['category']).columns
+        cat_codes = [x + '_cat' for x in cat]
+        
+        df[cat_codes] = df[cat].apply(lambda x: x.cat.codes)
+        
+        df = df.select_dtypes(include = ['number'])
+        
+        return df
+
+
+def bodyfat():
+    data_file = _load_file('bodyfat.csv')
+    to_convert = ['Neck', 'Chest', 'Abdomen', 'Hip', 'Thigh', 'Knee', 'Ankle', 'Biceps', 'Forearm', 'Wrist']
+    
+    df = BodyfatDataFrame(pd.read_csv(data_file))
+    df[['Weight', 'Height']] = df[['Weight', 'Height']].applymap(lambda x: round(x, 2))
+    df[to_convert] = df[to_convert].applymap(lambda x: round(x * 0.39370, 2))
+    
+    df.attrs['cleaned'] = False
+    df.attrs['unit'] = 'imperial'
+    
+    return df
