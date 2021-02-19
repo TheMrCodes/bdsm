@@ -24,20 +24,21 @@ class TitanicDataFrame(pd.DataFrame):
     def clean(self, unit = 'imperial'):
         df = self
         
-        # NA: unknown
-        for col in ['Cabin', 'Embarked']:
-            df[col] = np.where(df[col].isna(), 'Unknown', df[col])
-        
-        # NA: mean
-        df['Age'] = np.where(df['Age'].isna(), df['Age'].mean(), df['Age'])
-        
-        # column types
-        df['Survived'] = df['Survived'].astype('category')
-        df['Sex'] = df['Sex'].astype('category')
-        df['Embarked'] = df['Embarked'].astype('category')
-        
-        # set clean state
-        df.attrs['cleaned'] = True
+        if not df.attrs['cleaned']:
+            # NA: unknown
+            for col in ['Cabin', 'Embarked']:
+                df[col] = np.where(df[col].isna(), 'Unknown', df[col])
+            
+            # NA: mean
+            df['Age'] = np.where(df['Age'].isna(), df['Age'].mean(), df['Age'])
+            
+            # column types
+            df['Survived'] = df['Survived'].astype('category')
+            df['Sex'] = df['Sex'].astype('category')
+            df['Embarked'] = df['Embarked'].astype('category')
+            
+            # set clean state
+            df.attrs['cleaned'] = True
         
         return df
     

@@ -24,11 +24,12 @@ class IrisDataFrame(pd.DataFrame):
     def clean(self, unit = 'imperial'):
         df = self
         
-        # column types
-        df['Class'] = df['Class'].astype('category')
-        
-        # set clean state
-        df.attrs['cleaned'] = True
+        if not df.attrs['cleaned']:
+            # column types
+            df['Class'] = df['Class'].astype('category')
+            
+            # set clean state
+            df.attrs['cleaned'] = True
         
         return df
     

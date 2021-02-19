@@ -43,11 +43,12 @@ class BodyfatDataFrame(pd.DataFrame):
     def clean(self):
         df = self
         
-        # drop Density
-        df = df.drop(['Density'], axis = 1)
-        
-        # set clean state
-        df.attrs['cleaned'] = True
+        if not df.attrs['cleaned']:
+            # drop Density
+            df = df.drop(['Density'], axis = 1)
+            
+            # set clean state
+            df.attrs['cleaned'] = True
         
         return df
     

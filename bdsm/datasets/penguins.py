@@ -24,27 +24,28 @@ class PenguinsDataFrame(pd.DataFrame):
     def clean(self, unit = 'imperial'):
         df = self
         
-        # drop headers in data
-        df = df[df['Comments'] != 'Comments']
-        
-        # NA: mean by species as float
-        for col in ['CulmenLength', 'CulmenDepth', 'FlipperLength', 'BodyMass']:
-            df[col] = df[col].astype('float')
-            df[col] = df[col].fillna(df.groupby('Species')[col].transform('mean'))
-        
-        # NA: unknown
-        df['Sex'] = np.where(df['Sex'].isna(), 'Unknown', df['Sex'].str.title())
-        
-        # unneeded columns
-        df = df.drop(df.columns[[0, 1, 3, 5, 6, 7, 8, 14, 15, 16]], axis = 1)
-        
-        # column types
-        df['Species'] = df['Species'].astype('category')
-        df['Island'] = df['Island'].astype('category')
-        df['Sex'] = df['Sex'].astype('category')
-        
-        # set clean state
-        df.attrs['cleaned'] = True
+        if not df.attrs['cleaned']:
+            # drop headers in data
+            df = df[df['Comments'] != 'Comments']
+            
+            # NA: mean by species as float
+            for col in ['CulmenLength', 'CulmenDepth', 'FlipperLength', 'BodyMass']:
+                df[col] = df[col].astype('float')
+                df[col] = df[col].fillna(df.groupby('Species')[col].transform('mean'))
+            
+            # NA: unknown
+            df['Sex'] = np.where(df['Sex'].isna(), 'Unknown', df['Sex'].str.title())
+            
+            # unneeded columns
+            df = df.drop(df.columns[[0, 1, 3, 5, 6, 7, 8, 14, 15, 16]], axis = 1)
+            
+            # column types
+            df['Species'] = df['Species'].astype('category')
+            df['Island'] = df['Island'].astype('category')
+            df['Sex'] = df['Sex'].astype('category')
+            
+            # set clean state
+            df.attrs['cleaned'] = True
         
         return df
     
