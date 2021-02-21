@@ -60,5 +60,12 @@ from bdsm.datasets import (
 )
 
 from bdsm.tools import (
+    getpath,
     vif
 )
+
+
+datasets = ['abalones', 'bodyfat', 'iris', 'mall', 'penguins', 'students', 'titanic', 'wine']
+tools = ['getpath', 'vif']
+
+__all__ = datasets + tools
