@@ -11,5 +11,4 @@ def getpath(*args):
         else:
             extend_path.extend([p] if isinstance(p, str) else [str(elem) for elem in p])
             
-    
     return os.path.join(current_path, *extend_path)
