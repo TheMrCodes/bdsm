@@ -65,7 +65,8 @@ from bdsm.tools import (
 )
 
 
-datasets = ['abalones', 'bodyfat', 'iris', 'mall', 'penguins', 'students', 'titanic', 'wine']
-tools = ['getpath', 'vif']
+l_datasets = ['abalones', 'bodyfat', 'iris', 'mall', 'penguins', 'students', 'titanic', 'wine']
+l_processes = ['wn', 'ma', 'ar', 'arma']
+l_tools = ['getpath', 'vif']
 
-__all__ = datasets + tools
+__all__ = l_datasets + l_processes + l_tools
