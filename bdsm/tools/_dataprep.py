@@ -6,6 +6,7 @@ functions to inspect and prepare a dataset.
 # Author: Alexander Adrowitzer <alexander.adrowitzer@fhstp.ac.at>
 
 import locale
+import pandas as pd
 
 def quality(df):
     """Quality inspection of a DataFrame
