@@ -49,12 +49,24 @@ del hard_dependencies, dependency, missing_dependencies
 import os
 
 from bdsm.datasets import (
-    Abalones,
-    Titanic,
-    Iris,
-    Penguins,
-    Mall,
-    Bodyfat,
-    Wine,
-    Students
+    abalones,
+    bodyfat,
+    iris,
+    mall,
+    penguins,
+    students,
+    titanic,
+    wine
 )
+
+from bdsm.tools import (
+    getpath,
+    vif
+)
+
+
+l_datasets = ['abalones', 'bodyfat', 'iris', 'mall', 'penguins', 'students', 'titanic', 'wine']
+l_processes = ['wn', 'ma', 'ar', 'arma']
+l_tools = ['getpath', 'vif']
+
+__all__ = l_datasets + l_processes + l_tools

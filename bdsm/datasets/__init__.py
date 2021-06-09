@@ -4,22 +4,18 @@ datasets
 Datasets for Data Science
 """
 
-from .abalones import Abalones
-from .titanic import Titanic
-from .iris import Iris
-from .penguins import Penguins
-from .mall import Mall
-from .bodyfat import Bodyfat
-from .wine import Wine
-from .students import Students
+from .abalones import abalones
+from .bodyfat import bodyfat
+from .iris import iris
+from .mall import mall
+from .penguins import penguins
+from .students import students
+from .titanic import titanic
+from .wine import wine
 
-__all__ = [
-    'Abalones',
-    'Titanic',
-    'Iris',
-    'Penguins',
-    'Mall',
-    'Bodyfat',
-    'Wine',
-    'Students'
-]
+from .processes import wn, ma, ar, arma
+
+l_datasets = ['abalones', 'bodyfat', 'iris', 'mall', 'penguins', 'students', 'titanic', 'wine']
+l_processes = ['wn', 'ma', 'ar', 'arma']
+
+__all__ = l_datasets + l_processes
