@@ -61,6 +61,7 @@ from bdsm.datasets import (
 
 from bdsm.tools import (
     quality,
+    standardized_split,
     getpath,
     vif
 )
@@ -68,6 +69,6 @@ from bdsm.tools import (
 
 l_datasets = ['abalones', 'bodyfat', 'iris', 'mall', 'penguins', 'students', 'titanic', 'wine']
 l_processes = ['wn', 'ma', 'ar', 'arma']
-l_tools = ['quality', 'getpath', 'vif']
+l_tools = ['quality', 'standardized_split', 'getpath', 'vif']
 
 __all__ = l_datasets + l_processes + l_tools
