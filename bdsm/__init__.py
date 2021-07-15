@@ -59,6 +59,8 @@ from bdsm.datasets import (
     wine
 )
 
+from bdsm.metrics import (confusion_matrix)
+
 from bdsm.tools import (
     quality,
     standardized_split,
@@ -66,8 +68,8 @@ from bdsm.tools import (
     vif
 )
 
-
 l_datasets = ['abalones', 'bodyfat', 'iris', 'mall', 'penguins', 'students', 'titanic', 'wine']
+l_metrics = ['confusion_matrix']
 l_processes = ['wn', 'ma', 'ar', 'arma']
 l_tools = ['quality', 'standardized_split', 'getpath', 'vif']
 
