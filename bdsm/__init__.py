@@ -45,16 +45,18 @@ if missing_dependencies:
     
 del hard_dependencies, dependency, missing_dependencies
 
-
 import os
 
 from bdsm.datasets import (
     abalones,
     bodyfat,
+    boston,
     iris,
     mall,
     penguins,
+    shopping,
     students,
+    sunshine,
     titanic,
     wine
 )
@@ -68,7 +70,7 @@ from bdsm.tools import (
     vif
 )
 
-l_datasets = ['abalones', 'bodyfat', 'iris', 'mall', 'penguins', 'students', 'titanic', 'wine']
+l_datasets = ['abalones', 'bodyfat', 'boston', 'iris', 'mall', 'penguins', 'shopping', 'students', 'sunshine', 'titanic', 'wine']
 l_metrics = ['confusion_matrix']
 l_processes = ['wn', 'ma', 'ar', 'arma']
 l_tools = ['quality', 'standardized_split', 'getpath', 'vif']

@@ -2,31 +2,31 @@ import numpy as np
 import pandas as pd
 from ._helper import _load_file
 
-class IrisSeries(pd.Series):
+class BostonSeries(pd.Series):
     @property
     def _constructor(self):
-        return IrisSeries
+        return BostonSeries
     
     @property
     def _constructor_expanddim(self):
-        return IrisDataFrame
+        return BostonDataFrame
     
 
-class IrisDataFrame(pd.DataFrame):    
+class BostonDataFrame(pd.DataFrame):    
     @property
     def _constructor(self):
-        return IrisDataFrame
+        return BostonDataFrame
     
     @property
     def _constructor_sliced(self):
-        return IrisSeries
+        return BostonSeries
     
     def clean(self, unit = 'imperial'):
         df = self
         
         if not df.attrs['cleaned']:
             # column types
-            df['Class'] = df['Class'].astype('category')
+            df['color'] = df['color'].astype('category')
             
             # set clean state
             df.attrs['cleaned'] = True
@@ -49,10 +49,11 @@ class IrisDataFrame(pd.DataFrame):
         
         return df
 
-def iris():
-    data_file = _load_file('iris.csv')
+
+def boston():
+    data_file = _load_file('boston.csv')
     
-    df = IrisDataFrame(pd.read_csv(data_file))
+    df = BostonDataFrame(pd.read_csv(data_file, delimiter = ';'))
     df.attrs['cleaned'] = False
     
     return df

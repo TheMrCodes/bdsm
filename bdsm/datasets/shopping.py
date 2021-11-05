@@ -2,31 +2,31 @@ import numpy as np
 import pandas as pd
 from ._helper import _load_file
 
-class IrisSeries(pd.Series):
+class ShoppingSeries(pd.Series):
     @property
     def _constructor(self):
-        return IrisSeries
+        return ShoppingSeries
     
     @property
     def _constructor_expanddim(self):
-        return IrisDataFrame
+        return ShoppingDataFrame
     
 
-class IrisDataFrame(pd.DataFrame):    
+class ShoppingDataFrame(pd.DataFrame):    
     @property
     def _constructor(self):
-        return IrisDataFrame
+        return ShoppingDataFrame
     
     @property
     def _constructor_sliced(self):
-        return IrisSeries
+        return ShoppingSeries
     
     def clean(self, unit = 'imperial'):
         df = self
         
         if not df.attrs['cleaned']:
             # column types
-            df['Class'] = df['Class'].astype('category')
+            df['color'] = df['color'].astype('category')
             
             # set clean state
             df.attrs['cleaned'] = True
@@ -49,10 +49,11 @@ class IrisDataFrame(pd.DataFrame):
         
         return df
 
-def iris():
-    data_file = _load_file('iris.csv')
+
+def shopping():
+    data_file = _load_file('shopping.csv')
     
-    df = IrisDataFrame(pd.read_csv(data_file))
+    df = ShoppingDataFrame(pd.read_csv(data_file, delimiter = ';'))
     df.attrs['cleaned'] = False
     
     return df
