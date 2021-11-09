@@ -33,6 +33,23 @@ class AbalonesDataFrame(pd.DataFrame):
         
         return df
     
+    def for_regression(self, sex):
+        df = self
+        if sex=='A':
+            df = df         
+        elif sex=='M':
+            df = df[df["Sex"]=="M"].copy()
+        elif sex=="F":
+            df = df[df["Sex"]=="F"].copy()
+        elif sex=="I":
+            df = df[df["Sex"]=="I"].copy()
+        else:
+            print("Unknown parameter. Please use A for all, M for male, F for Female or I for Infants")
+
+        df.drop("Sex", axis=1, inplace=True)
+
+        return df
+
     def to_numeric(self):
         # clean df if not cleaned
         if not self.attrs['cleaned']:
