@@ -22,16 +22,7 @@ class ShoppingDataFrame(pd.DataFrame):
         return ShoppingSeries
     
     def clean(self, unit = 'imperial'):
-        df = self
-        
-        if not df.attrs['cleaned']:
-            # column types
-            df['color'] = df['color'].astype('category')
-            
-            # set clean state
-            df.attrs['cleaned'] = True
-        
-        return df
+        return self
     
     def to_numeric(self):
         # clean df if not cleaned
@@ -49,8 +40,33 @@ class ShoppingDataFrame(pd.DataFrame):
         
         return df
 
+    def for_regression(self):
+        # clean df if not cleaned
+        if not self.attrs['cleaned']:
+            df = self.clean()
+        else:
+            df = self
+
+        df.drop("Gender", axis=1, inplace=True)
+
+        return df
+
 
 def shopping():
+    """
+    Shopping frequency
+    
+    Description
+    -----------
+    The Shopping data frame has 40 rows and 4 columns.
+
+    This data frame contains the following columns:
+    - Shopping: Number of shopping activities per month
+    - Age: Age in years
+    - Gender: Gender (1 = male, 0 = female)
+    - Income: Monthly income in [1000 EUR]
+    """
+
     data_file = _load_file('shopping.csv')
     
     df = ShoppingDataFrame(pd.read_csv(data_file, delimiter = ';'))
