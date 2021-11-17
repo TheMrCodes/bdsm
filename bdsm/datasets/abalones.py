@@ -78,7 +78,7 @@ def abalones():
 
     Description
     -----------
-    4177 rows, 8 columns
+    4177 rows, 9 columns
 
     Given is the attribute name, attribute type, the measurement unit and a
     brief description.  The number of rings is the value to predict: either
