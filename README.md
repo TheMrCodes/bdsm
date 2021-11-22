@@ -1,5 +1,5 @@
 # bdsm
-Bachelor Data Science Modelling (BDSM) Development of a collection of methods and datasets for Data Science as Python Package
+Bachelor Data Science Modelling (BDSM) is a collection of methods and datasets for teaching Data Science.
 
 ## Getting started
 
